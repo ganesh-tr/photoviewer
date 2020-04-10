@@ -1,5 +1,5 @@
 //
-//  DetailViewController.swift
+//  PreviewViewController.swift
 //  Photoviewer
 //
 //  Created by Ganesh TR on 10/04/20.
@@ -8,16 +8,16 @@
 
 import UIKit
 
-class DetailViewController: UIViewController {
+class PreviewViewController: UIViewController {
 
-    @IBOutlet weak var detailDescriptionLabel: UILabel!
+    @IBOutlet weak var imageView: UIImageView!
 
 
     func configureView() {
         // Update the user interface for the detail item.
-        if let detail = detailItem {
-            if let label = detailDescriptionLabel {
-                label.text = detail.timestamp!.description
+        if let imageview = imageView {
+            if let image = imageItem {
+                imageview.image = image
             }
         }
     }
@@ -28,13 +28,17 @@ class DetailViewController: UIViewController {
         configureView()
     }
 
-    var detailItem: Event? {
+    var imageItem: UIImage? {
         didSet {
             // Update the view.
             configureView()
         }
     }
 
-
+    @IBAction func onTapRotateButton(_ sender: Any) {
+        let angle =  Double.pi/2
+         let tr = CGAffineTransform.identity.rotated(by: CGFloat(angle))
+         imageView.transform = tr
+    }
 }
 
