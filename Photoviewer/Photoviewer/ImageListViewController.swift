@@ -5,14 +5,16 @@
 //  Created by Ganesh TR on 10/04/20.
 //  Copyright © 2020 Ganesh TR. All rights reserved.
 //
-
+#if targetEnvironment(macCatalyst)
+import AppKit
+#endif
 import UIKit
 import CoreData
 
-class ImageListViewController: UITableViewController, NSFetchedResultsControllerDelegate {
+class ImageListViewController: UITableViewController, UIImagePickerControllerDelegate,
+                               UINavigationControllerDelegate {
 
     var detailViewController: PreviewViewController? = nil
-    var managedObjectContext: NSManagedObjectContext? = nil
     var images : Array<UIImage> = []
 
 
@@ -25,7 +27,22 @@ class ImageListViewController: UITableViewController, NSFetchedResultsController
         }
         navigationItem.leftBarButtonItem = editButtonItem
 
-        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(insertNewObject(_:)))
+        var addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(insertNewObject(_:)))
+        let button =  UIButton(type: .system)
+        button.setImage(UIImage(named: "icon_right"), for: .normal)
+        button.addTarget(self, action: #selector(insertNewObject(_:)), for: .touchUpInside)
+        button.frame = CGRect(x: 0, y: 0, width: 53, height: 31)
+        button.imageEdgeInsets = UIEdgeInsets(top: -1, left: 32, bottom: 1, right: -32)
+        
+        let label = UILabel(frame: CGRect(x: 3, y: 5, width: 50, height: 20))
+        label.text = "Add"
+        label.textAlignment = .center
+        label.textColor = UIColor.systemBlue
+        label.backgroundColor =   UIColor.clear
+        button.addSubview(label)
+        
+        addButton = UIBarButtonItem(customView: button)
+
         navigationItem.rightBarButtonItem = addButton
         if let split = splitViewController {
             let controllers = split.viewControllers
@@ -44,7 +61,9 @@ class ImageListViewController: UITableViewController, NSFetchedResultsController
     }
 
     @objc
-    func insertNewObject(_ sender: Any) {
+    func insertNewObject(_ sender: UIView) {
+        let helper = ImagePicker(presenter: self, sourceView: sender)
+        helper.pickImage()
     }
 
     // MARK: - Segues
@@ -94,3 +113,21 @@ class ImageListViewController: UITableViewController, NSFetchedResultsController
     }
 }
 
+extension ImageListViewController {
+    
+  public func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+    dismiss(animated: true)
+  }
+
+  public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
+    dismiss(animated: true)
+    ImagePicker.image(infoDictionary: info, completion: { (image, error) in
+      if let error = error {
+        print("unable to get image from picker - \(error)")
+      } else if let image = image {
+        self.images.append(image)
+        self.tableView.reloadData()
+      }
+    })
+  }
+}

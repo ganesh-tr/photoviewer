@@ -70,5 +70,9 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSCameraUsageDescription</key>
+	<string>Photoviewer would like to let you add images to your list  </string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Photoviewer would like to let you add images to your list  </string>
 </dict>
 </plist>
