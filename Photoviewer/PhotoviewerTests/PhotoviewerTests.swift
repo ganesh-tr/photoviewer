@@ -8,27 +8,42 @@
 
 import XCTest
 @testable import Photoviewer
-
 class PhotoviewerTests: XCTestCase {
+    
+}
 
-    override func setUp() {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+class PExtensionStringTests: XCTestCase {
+    
+// Test case for PExtensionString class
+
+    func testFileURL() {
+        let nameExtension = "Application/Documents/image.jpeg".fileURL
+        XCTAssertEqual(nameExtension,URL(fileURLWithPath:"Application/Documents/image.jpeg"))
     }
-
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+    
+    func testPathExtension() {
+        var nameExtension = "image.jpg".pathExtension
+        XCTAssertEqual(nameExtension,"jpg")
+        nameExtension = "image".pathExtension
+        XCTAssertEqual(nameExtension,"")
     }
-
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    
+    func testLastPathComponent() {
+       let path =
+        "/Users/ganeshtr/Library/Developer/CoreSimulator/Devices/Application/Documents/image.jpeg"
+        XCTAssertEqual(path.lastPathComponent, "image.jpeg")
     }
-
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
+    
+    func testCustomNameDateFormat() {
+        let customDate = "2020-04-18_14_49_10"
+        let customNameDateFormat = String.stringFrom(date:customDate.toDate()!)
+        XCTAssertEqual(customNameDateFormat,customDate)
     }
-
+    
+    func testCustomImageName() {
+        let customDate = "2020-04-18_14_49_10".toDate()!
+        let customImageName = String.customImageName(date:customDate)
+        XCTAssertEqual(customImageName,"2020-04-18_14_49_10.jpg")
+    }
+    
 }

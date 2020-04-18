@@ -19,11 +19,21 @@ extension String {
         return fileURL.lastPathComponent
     }
     
-    static func customImageName() -> String {
-        let date = Date()
+    static func customImageName(date:Date = Date()) -> String {
+        return #"\#(Self.stringFrom(date:date)).jpg"#
+    }
+    
+    static func stringFrom(date:Date) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'_'HH_mm_ss"
         dateFormatter.timeZone = TimeZone(identifier: "GMT")
-        return #"\#(dateFormatter.string(from: date)).jpg"#
+        return #"\#(dateFormatter.string(from: date))"#
+    }
+    
+    func toDate() -> Date? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeZone = TimeZone(abbreviation: "GMT")
+        dateFormatter.dateFormat = "yyyy-MM-dd_HH_mm_ss"
+        return dateFormatter.date(from:self)
     }
 }
