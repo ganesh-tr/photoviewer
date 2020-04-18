@@ -2,8 +2,8 @@
 Framework Component
 1. Image Loader
     1.1  Local Image
-        a, Save bundle images to document directory
-        b, Retrieve images from local document directory
+        a, Save bundle images to document directory - Done
+        b, Retrieve images from local document directory - Done
         c, Change properties of the image like rotation
         1.2 Server Images
             a, Load server images from URL
@@ -12,10 +12,10 @@ Framework Component
             d, Change properties of the image like rotation
             
 2. User Interface (iOS & Mac OS)
-    a, Provide provision to view the list of images available in document directory
-    b, Tap on the image to view the image in full screen
+    a, Provide provision to view the list of images available in document directory - Done
+    b, Tap on the image to view the image in full screen - Done
     c, Provide provision to rotate the image
-    d, Provide provision to view the details of the image
+    d, Provide provision to view the details of the image - In Progress
 
 
 
