@@ -12,25 +12,25 @@ class PreviewViewController: UIViewController {
 
     @IBOutlet weak var imageView: UIImageView!
 
-
     func configureView() {
-        // Update the user interface for the detail item.
-        if let imageview = imageView {
-            if let image = imageItem {
-                imageview.image = image
+        if let imageV = imageView {
+            if let image = imageItem?.image {
+                imageV.image = image
             }
         }
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         configureView()
     }
 
-    var imageItem: UIImage? {
+    var imageItem: PImage? {
         didSet {
-            // Update the view.
             configureView()
         }
     }

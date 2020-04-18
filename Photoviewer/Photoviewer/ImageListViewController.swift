@@ -5,6 +5,7 @@
 //  Created by Ganesh TR on 10/04/20.
 //  Copyright © 2020 Ganesh TR. All rights reserved.
 //
+
 #if targetEnvironment(macCatalyst)
 import AppKit
 #endif
@@ -15,15 +16,23 @@ class ImageListViewController: UITableViewController, UIImagePickerControllerDel
                                UINavigationControllerDelegate {
 
     var detailViewController: PreviewViewController? = nil
-    var images : Array<UIImage> = []
+    var images : Array<PImage> = []
+    private var refreshTableViewControl:UIRefreshControl = UIRefreshControl()
 
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
-        for i in 1...10 {
-            let image =  UIImage(named: "\(i).jpeg")
-            images.append(image!)
+        self.tableView.refreshControl = refreshTableViewControl
+        self.refreshTableViewControl.addTarget(self, action: #selector(refreshTableViewData(_:)), for: .valueChanged)
+        self.refreshTableViewControl.attributedTitle =
+            NSAttributedString(string: "Refreshing local images....")
+
+        
+        PImageManager.shareInstance.loadImages { (images) in
+            self.images = images
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
         }
         navigationItem.leftBarButtonItem = editButtonItem
 
@@ -46,7 +55,9 @@ class ImageListViewController: UITableViewController, UIImagePickerControllerDel
         navigationItem.rightBarButtonItem = addButton
         if let split = splitViewController {
             let controllers = split.viewControllers
-            detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? PreviewViewController
+            detailViewController =
+                (controllers[controllers.count-1] as! UINavigationController).topViewController
+                    as? PreviewViewController
         }
     }
 
@@ -84,7 +95,6 @@ class ImageListViewController: UITableViewController, UIImagePickerControllerDel
     // MARK: - Table View
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-//        return fetchedResultsController.sections?.count ?? 0
         return 1
     }
 
@@ -94,7 +104,8 @@ class ImageListViewController: UITableViewController, UIImagePickerControllerDel
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-        configureCell(cell, withName: "image \(indexPath.row)")
+        let pImage = images[indexPath.row]
+        configureCell(cell, withName:pImage.imageName ?? "-----" )
         return cell
     }
 
@@ -102,14 +113,32 @@ class ImageListViewController: UITableViewController, UIImagePickerControllerDel
         return true
     }
 
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle,
+                            forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            
+            PImageManager.shareInstance
+                .deleteImage(image: self.images[indexPath.row]) {
+                    self.images.remove(at:indexPath.row)
+                    DispatchQueue.main.async {
+                        self.tableView.deleteRows(at: [indexPath], with: .fade)
+                    }
+            }
         }
     }
     
     func configureCell(_ cell: UITableViewCell, withName name: String) {
         cell.textLabel!.text = name
+    }
+    
+    @objc func refreshTableViewData(_ sender: Any) {
+        PImageManager.shareInstance.refreshImage(callBack: { (images) in
+            self.images = images
+            DispatchQueue.main.async {
+                self.refreshTableViewControl.endRefreshing()
+                self.tableView.layoutIfNeeded()
+                self.tableView.reloadData()
+            }
+        })
     }
 }
 
@@ -125,8 +154,12 @@ extension ImageListViewController {
       if let error = error {
         print("unable to get image from picker - \(error)")
       } else if let image = image {
-        self.images.append(image)
-        self.tableView.reloadData()
+        PImageManager.shareInstance.addImage(image: image) {(pImage) in 
+            self.images.append(pImage)
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
       }
     })
   }

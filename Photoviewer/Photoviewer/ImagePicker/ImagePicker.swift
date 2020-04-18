@@ -11,7 +11,9 @@ import UIKit
 import AVFoundation
 
 public class ImagePicker: NSObject {
-  let presenter: UIViewController & UIImagePickerControllerDelegate & UINavigationControllerDelegate
+  let presenter: UIViewController &
+                 UIImagePickerControllerDelegate &
+                 UINavigationControllerDelegate
   private let sourceView: UIView
   var canAddRemoveAction = true
   private var cameraIsUserPermitted = false
