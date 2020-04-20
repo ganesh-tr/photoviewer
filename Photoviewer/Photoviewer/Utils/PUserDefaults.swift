@@ -19,6 +19,11 @@ class PUserDefaults {
     func loadedImageFromLocalBundle() {
         UserDefaults.standard.set(true, forKey: Self.KImageLoadedKey)
     }
+    
+    func resetLoadedImageFromLocalBundleKey() {
+        UserDefaults.standard.set(false, forKey: Self.KImageLoadedKey)
+    }
+    
     func isImageLoadedFromLocalBundle() -> Bool {
         return UserDefaults.standard.bool(forKey: Self.KImageLoadedKey)
     }

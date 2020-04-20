@@ -8,9 +8,6 @@
 
 import XCTest
 @testable import Photoviewer
-class PhotoviewerTests: XCTestCase {
-    
-}
 
 class PExtensionStringTests: XCTestCase {
     
@@ -45,5 +42,114 @@ class PExtensionStringTests: XCTestCase {
         let customImageName = String.customImageName(date:customDate)
         XCTAssertEqual(customImageName,"2020-04-18_14_49_10.jpg")
     }
+}
+
+class PLocalImageManagerTest : XCTestCase {
     
+    func testFreshLoadImagesFromDocumentDirectoryPath() {
+        print("testFreshLoadImagesFromDocumentDirectoryPath****************************")
+        let expectations =
+            expectation(description:
+                """
+                   Fresh Image load into document directory
+                   from local bundle and runs the callback closure
+                """)
+        PLocalImageManager.shareInstance.loadImages { (images) in
+            XCTAssert(images.count > 0)
+            expectations.fulfill()
+            print("--------------------------------testFreshLoadImagesFromDocumentDirectoryPath")
+        }
+        waitForExpectations(timeout: 1) { error in
+          if let error = error {
+            XCTFail("waitForExpectationsWithTimeout errored: \(error)")
+          }
+        }
+    }
+    
+    func testLoadImagesFromDocumentDirectoryPath() {
+        print("testLoadImagesFromDocumentDirectoryPath****************************")
+        let expectations =
+            expectation(description:
+                """
+                   Load images from document directory
+                   from local bundle and runs the callback closure
+                """)
+        PLocalImageManager.shareInstance.loadImages { (images) in
+            XCTAssert(images.count > 0)
+            expectations.fulfill()
+            print("--------------------------------testLoadImagesFromDocumentDirectoryPath")
+        }
+        waitForExpectations(timeout: 1) { error in
+          if let error = error {
+            XCTFail("waitForExpectationsWithTimeout errored: \(error)")
+          }
+        }
+    }
+
+    func testRefreshImageLoadInDocumentDirectory() {
+        print("testRefreshImageLoadInDocumentDirectory****************************")
+        let expectations =
+            expectation(description:
+                """
+                   Refresh Image load in document directory
+                   from local bundle and runs the callback closure
+                """)
+        PLocalImageManager.shareInstance.refreshImage(callBack: { (images) in
+            XCTAssert(images.count > 0)
+            expectations.fulfill()
+            print("--------------------------------testRefreshImageLoadInDocumentDirectory")
+        })
+        waitForExpectations(timeout: 1) { error in
+          if let error = error {
+            XCTFail("waitForExpectationsWithTimeout errored: \(error)")
+          }
+        }
+    }
+    
+    func testAddImageToDocumentDirectory(){
+        let expectations =
+            expectation(description:
+                """
+                   Add image from local document directory path
+                """)
+        PLocalImageManager.shareInstance.refreshImage { (images) in
+            let filePath =
+                PFileManager.shareInstance.appendFileNameWithPath(PFileManager.shareInstance.resourcePath()!, fileName: "1.jpeg")
+            let image = UIImage(contentsOfFile: filePath)
+            PLocalImageManager.shareInstance.addImage(image: image!) { (image) in
+                XCTAssertNotNil(image)
+                expectations.fulfill()
+            }
+        }
+        waitForExpectations(timeout: 1) { error in
+          if let error = error {
+            XCTFail("waitForExpectationsWithTimeout errored: \(error)")
+          }
+        }
+    }
+    
+    func testDeleteImageFromDocumentDirectoryPath() {
+    
+        let expectations =
+            expectation(description:
+                """
+                   Delete image from local document directory path
+                """)
+        PLocalImageManager.shareInstance.refreshImage { (images) in
+            if images.count > 0 {
+                PLocalImageManager.shareInstance.deleteImage(image: images[0]) {
+                    XCTAssert(true)
+                    expectations.fulfill()
+                }
+            } else {
+                XCTAssert(false)
+                expectations.fulfill()
+            }
+        }
+        waitForExpectations(timeout: 1) { error in
+          if let error = error {
+            XCTFail("waitForExpectationsWithTimeout errored: \(error)")
+          }
+        }
+    }
 }
