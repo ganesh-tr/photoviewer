@@ -47,7 +47,6 @@ class PExtensionStringTests: XCTestCase {
 class PLocalImageManagerTest : XCTestCase {
     
     func testFreshLoadImagesFromDocumentDirectoryPath() {
-        print("testFreshLoadImagesFromDocumentDirectoryPath****************************")
         let expectations =
             expectation(description:
                 """
@@ -57,7 +56,6 @@ class PLocalImageManagerTest : XCTestCase {
         PLocalImageManager.shareInstance.loadImages { (images) in
             XCTAssert(images.count > 0)
             expectations.fulfill()
-            print("--------------------------------testFreshLoadImagesFromDocumentDirectoryPath")
         }
         waitForExpectations(timeout: 1) { error in
           if let error = error {
@@ -67,7 +65,6 @@ class PLocalImageManagerTest : XCTestCase {
     }
     
     func testLoadImagesFromDocumentDirectoryPath() {
-        print("testLoadImagesFromDocumentDirectoryPath****************************")
         let expectations =
             expectation(description:
                 """
@@ -77,7 +74,6 @@ class PLocalImageManagerTest : XCTestCase {
         PLocalImageManager.shareInstance.loadImages { (images) in
             XCTAssert(images.count > 0)
             expectations.fulfill()
-            print("--------------------------------testLoadImagesFromDocumentDirectoryPath")
         }
         waitForExpectations(timeout: 1) { error in
           if let error = error {
@@ -87,7 +83,6 @@ class PLocalImageManagerTest : XCTestCase {
     }
 
     func testRefreshImageLoadInDocumentDirectory() {
-        print("testRefreshImageLoadInDocumentDirectory****************************")
         let expectations =
             expectation(description:
                 """
@@ -97,7 +92,6 @@ class PLocalImageManagerTest : XCTestCase {
         PLocalImageManager.shareInstance.refreshImage(callBack: { (images) in
             XCTAssert(images.count > 0)
             expectations.fulfill()
-            print("--------------------------------testRefreshImageLoadInDocumentDirectory")
         })
         waitForExpectations(timeout: 1) { error in
           if let error = error {
