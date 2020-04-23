@@ -10,10 +10,10 @@ import Foundation
 import UIKit
 
 protocol ImageManager {
-        func loadImages(callBack:@escaping ([PImage])->())
-        func deleteImage(image:PImage, callBack:@escaping ()->())
-        func refreshImage(callBack:@escaping ([PImage])->())
-        func addImage(image:UIImage,callBack:@escaping (PImage)->())
+    func loadImages(callBack:@escaping ([PImage])->())
+    func deleteImage(image:PImage, callBack:@escaping ()->())
+    func refreshImage(callBack:@escaping ([PImage])->())
+    func addImage(image:UIImage,callBack:@escaping (PImage)->())
 }
 
 class PImageManager {

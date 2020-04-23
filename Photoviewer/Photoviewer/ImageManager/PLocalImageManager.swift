@@ -12,12 +12,13 @@ import UIKit
 
 class PLocalImageManager : ImageManager {
     private static let fileExtensions : [String] = ["jpeg","jpg","png"]
-    
+    private let userDefaults : UserDefaultsProtocol = PDocumentDirectoryUserDefaults.sharedInstance
     static let shareInstance = PLocalImageManager()
+    typealias ImageType = PImage
     
     private init() {}
     
-    private func copyFilesFromBundleToDocumentsFolderWith(callBack:@escaping ()->()) {
+    func copyImagesFromLocalBundle(callBack:@escaping ()->()) {
         DispatchQueue.global(qos: .background).async {
             if let resPath = PFileManager.shareInstance.resourcePath() {
                 let dirContents = PFileManager.shareInstance.directoryContentAtPath(resPath)
@@ -31,8 +32,6 @@ class PLocalImageManager : ImageManager {
                         let sourceURL =
                                 PFileManager.shareInstance
                                     .appendFileNameWithPath(resPath, fileName: fileName)
-//                        print("Source: URL \(sourceURL)")
-//                        print("Dest: URL \(destURL)")
                         do {
                             if FileManager.default.fileExists(atPath:destURL)  {
                                 try?FileManager.default.removeItem(atPath:destURL)
@@ -45,16 +44,16 @@ class PLocalImageManager : ImageManager {
                     }
                 }
             }
-            PUserDefaults.sharedInstance.loadedImageFromLocalBundle()
+            self.userDefaults.loadedImageFromLocalBundle()
             callBack()
         }
     }
     
     func loadImages(callBack:@escaping ([PImage])->()) {
-        if !PUserDefaults.sharedInstance.isImageLoadedFromLocalBundle() {
-             self.copyFilesFromBundleToDocumentsFolderWith() {
+        if !self.userDefaults.isImageLoadedFromLocalBundle() {
+             self.copyImagesFromLocalBundle() {
                 self.loadImageFromDocumentDirectoryPath { (images) in
-                    PUserDefaults.sharedInstance.loadedImageFromLocalBundle()
+                    self.userDefaults.loadedImageFromLocalBundle()
                     callBack(images)
                 }
             }
@@ -81,7 +80,7 @@ class PLocalImageManager : ImageManager {
                     let pImage = PImage(imagePath: documentPath)
                     localImages.append(pImage)
                 }
-                PUserDefaults.sharedInstance.loadedImageFromLocalBundle()
+                self.userDefaults.loadedImageFromLocalBundle()
                 callBack(localImages)
             }
         }
@@ -97,7 +96,7 @@ class PLocalImageManager : ImageManager {
     }
     
     func refreshImage(callBack: @escaping ([PImage])->()) {
-        PUserDefaults.sharedInstance.resetLoadedImageFromLocalBundleKey()
+        self.userDefaults.resetLoadedImageFromLocalBundleKey()
         self.loadImageFromDocumentDirectoryPath { (images) in
             callBack(images)
         }

@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		534098B62450619E003A6CA2 /* PhImage+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534098B42450619E003A6CA2 /* PhImage+CoreDataClass.swift */; };
+		534098BA245061F1003A6CA2 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534098B9245061F1003A6CA2 /* CoreDataStack.swift */; };
+		534098BC2450635E003A6CA2 /* PCoreDataImageManger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534098BB2450635E003A6CA2 /* PCoreDataImageManger.swift */; };
+		534098C224507A5D003A6CA2 /* PhImage+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534098C124507A5D003A6CA2 /* PhImage+CoreDataProperties.swift */; };
 		53542223244B380E00025B69 /* PImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53542222244B380E00025B69 /* PImageManager.swift */; };
 		53542225244B388A00025B69 /* PLocalImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53542224244B388A00025B69 /* PLocalImageManager.swift */; };
 		5364DA4B24407D6E00AB05DB /* 9.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 5364DA4124407D6E00AB05DB /* 9.jpeg */; };
@@ -61,6 +65,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		534098B42450619E003A6CA2 /* PhImage+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhImage+CoreDataClass.swift"; sourceTree = "<group>"; };
+		534098B9245061F1003A6CA2 /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
+		534098BB2450635E003A6CA2 /* PCoreDataImageManger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PCoreDataImageManger.swift; sourceTree = "<group>"; };
+		534098C124507A5D003A6CA2 /* PhImage+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhImage+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		53542222244B380E00025B69 /* PImageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PImageManager.swift; sourceTree = "<group>"; };
 		53542224244B388A00025B69 /* PLocalImageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLocalImageManager.swift; sourceTree = "<group>"; };
 		5364DA4124407D6E00AB05DB /* 9.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 9.jpeg; sourceTree = "<group>"; };
@@ -116,6 +124,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		534098B8245061D8003A6CA2 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				534098B42450619E003A6CA2 /* PhImage+CoreDataClass.swift */,
+				534098C124507A5D003A6CA2 /* PhImage+CoreDataProperties.swift */,
+				534098B9245061F1003A6CA2 /* CoreDataStack.swift */,
+			);
+			path = CoreData;
+			sourceTree = "<group>";
+		};
 		53542221244B37DA00025B69 /* ImageManager */ = {
 			isa = PBXGroup;
 			children = (
@@ -123,6 +141,7 @@
 				53CDD90D24469CA80047280B /* PFileManager.swift */,
 				53542222244B380E00025B69 /* PImageManager.swift */,
 				53542224244B388A00025B69 /* PLocalImageManager.swift */,
+				534098BB2450635E003A6CA2 /* PCoreDataImageManger.swift */,
 			);
 			path = ImageManager;
 			sourceTree = "<group>";
@@ -183,6 +202,7 @@
 		53F5356B244029BD00B94AF2 /* Photoviewer */ = {
 			isa = PBXGroup;
 			children = (
+				534098B8245061D8003A6CA2 /* CoreData */,
 				53542226244B3FEA00025B69 /* Utils */,
 				53542221244B37DA00025B69 /* ImageManager */,
 				53F5359424402D2800B94AF2 /* Resources */,
@@ -343,14 +363,18 @@
 				53542223244B380E00025B69 /* PImageManager.swift in Sources */,
 				53CDD912244801110047280B /* PUserDefaults.swift in Sources */,
 				53CDD916244815530047280B /* PrimarySplitViewController.swift in Sources */,
+				534098BC2450635E003A6CA2 /* PCoreDataImageManger.swift in Sources */,
 				53F53574244029BD00B94AF2 /* ImageListViewController.swift in Sources */,
 				53CDD90E24469CA80047280B /* PFileManager.swift in Sources */,
+				534098C224507A5D003A6CA2 /* PhImage+CoreDataProperties.swift in Sources */,
 				53CDD9102446C48C0047280B /* PImage.swift in Sources */,
 				53F53570244029BD00B94AF2 /* Photoviewer.xcdatamodeld in Sources */,
+				534098BA245061F1003A6CA2 /* CoreDataStack.swift in Sources */,
 				53F53576244029BD00B94AF2 /* PreviewViewController.swift in Sources */,
 				5397025524454E8400048129 /* ImagePicker.swift in Sources */,
 				53F5356D244029BD00B94AF2 /* AppDelegate.swift in Sources */,
 				53F53572244029BD00B94AF2 /* SceneDelegate.swift in Sources */,
+				534098B62450619E003A6CA2 /* PhImage+CoreDataClass.swift in Sources */,
 				53CDD914244807EE0047280B /* PExtensionString.swift in Sources */,
 				53542225244B388A00025B69 /* PLocalImageManager.swift in Sources */,
 			);

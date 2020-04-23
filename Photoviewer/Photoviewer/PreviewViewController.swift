@@ -15,7 +15,7 @@ class PreviewViewController: UIViewController {
     func configureView() {
         if let imageV = imageView {
             if let image = imageItem?.image {
-                imageV.image = image
+                imageV.image = UIImage.init(data:image)
             }
         }
     }
@@ -29,7 +29,7 @@ class PreviewViewController: UIViewController {
         configureView()
     }
 
-    var imageItem: PImage? {
+    var imageItem: PhImage? {
         didSet {
             configureView()
         }

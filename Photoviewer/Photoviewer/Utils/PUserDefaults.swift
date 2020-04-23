@@ -8,9 +8,16 @@
 
 import Foundation
 
-class PUserDefaults {
-    static let sharedInstance = PUserDefaults()
-    private static let KImageLoadedKey = "PImageLoadedFromLocalBundle"
+protocol UserDefaultsProtocol {
+    func loadedImageFromLocalBundle()
+    func resetLoadedImageFromLocalBundleKey()
+    func isImageLoadedFromLocalBundle() -> Bool
+}
+
+class PDocumentDirectoryUserDefaults : UserDefaultsProtocol {
+    static let sharedInstance = PDocumentDirectoryUserDefaults()
+    
+    private static let KImageLoadedKey = "PImageLoadedFromLocalBundleToDocumentDirectory"
     
     private init() {
         UserDefaults.standard.set(false, forKey: Self.KImageLoadedKey)
@@ -26,5 +33,26 @@ class PUserDefaults {
     
     func isImageLoadedFromLocalBundle() -> Bool {
         return UserDefaults.standard.bool(forKey: Self.KImageLoadedKey)
+    }
+}
+
+class PCoreDataUserDefaults : UserDefaultsProtocol {
+    static let sharedInstance = PCoreDataUserDefaults()
+    
+    private static let KCoreDataImageLoadedKey = "PImageLoadedFromLocalBundleToCoreData"
+    
+    private init() {
+    }
+    
+    func loadedImageFromLocalBundle() {
+        UserDefaults.standard.set(true, forKey: Self.KCoreDataImageLoadedKey)
+    }
+    
+    func resetLoadedImageFromLocalBundleKey() {
+        UserDefaults.standard.set(false, forKey: Self.KCoreDataImageLoadedKey)
+    }
+    
+    func isImageLoadedFromLocalBundle() -> Bool {
+        return UserDefaults.standard.bool(forKey: Self.KCoreDataImageLoadedKey)
     }
 }

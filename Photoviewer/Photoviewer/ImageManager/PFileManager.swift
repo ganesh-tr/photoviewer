@@ -9,7 +9,16 @@
 import Foundation
 import UIKit
 
-class PFileManager {
+protocol PFileMangerProtocol {
+    
+    func resourcePath() -> String?
+    func documentDirectoryPath() -> URL?
+    func directoryContentAtPath(_ path: String) -> [String]
+    func appendFileNameWithPath(_ path:String,fileName:String) -> String
+    func appendFileNameWithPath(_ path:URL?,fileName:String) -> URL?
+}
+
+class PFileManager : PFileMangerProtocol {
     static let shareInstance = PFileManager()
     private init() {}
     
