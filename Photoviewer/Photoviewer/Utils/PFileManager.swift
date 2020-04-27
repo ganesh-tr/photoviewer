@@ -19,8 +19,7 @@ protocol PFileMangerProtocol {
 }
 
 class PFileManager : PFileMangerProtocol {
-    static let shareInstance = PFileManager()
-    private init() {}
+    init() {}
     
     func documentDirectoryPath() -> URL? {
            return FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first

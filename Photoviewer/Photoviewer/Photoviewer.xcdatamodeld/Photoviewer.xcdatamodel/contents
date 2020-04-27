@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19D76" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="PhImage" representedClassName="PhImage" syncable="YES">
-        <attribute name="image" attributeType="Binary"/>
+        <attribute name="image" attributeType="Binary" allowsExternalBinaryDataStorage="YES"/>
         <attribute name="imageExtension" attributeType="String"/>
         <attribute name="imageName" attributeType="String"/>
         <attribute name="imagePath" attributeType="String"/>
         <attribute name="isFavourite" attributeType="Boolean" usesScalarValueType="YES"/>
     </entity>
+    <fetchRequest name="FetchRequest" entity="PhImage"/>
     <elements>
         <element name="PhImage" positionX="-54" positionY="-9" width="128" height="118"/>
     </elements>

@@ -14,23 +14,24 @@ class PLocalImageManager : ImageManager {
     private static let fileExtensions : [String] = ["jpeg","jpg","png"]
     private let userDefaults : UserDefaultsProtocol = PDocumentDirectoryUserDefaults.sharedInstance
     static let shareInstance = PLocalImageManager()
+    let fileManager : PFileMangerProtocol = PFileManager()
     typealias ImageType = PImage
     
     private init() {}
     
     func copyImagesFromLocalBundle(callBack:@escaping ()->()) {
-        DispatchQueue.global(qos: .background).async {
-            if let resPath = PFileManager.shareInstance.resourcePath() {
-                let dirContents = PFileManager.shareInstance.directoryContentAtPath(resPath)
-                let documentsURL = PFileManager.shareInstance.documentDirectoryPath()
+        DispatchQueue.global(qos: .background).async { [unowned self] in
+            if let resPath = self.fileManager.resourcePath() {
+                let dirContents = self.fileManager.directoryContentAtPath(resPath)
+                let documentsURL = self.fileManager.documentDirectoryPath()
                 let filteredFiles = dirContents.filter{ PLocalImageManager.fileExtensions.contains($0.pathExtension)}
                 for fileName in filteredFiles {
                     let documentPath =
-                        PFileManager.shareInstance
+                        self.fileManager
                             .appendFileNameWithPath(documentsURL, fileName: fileName)?.path
                     if let destURL = documentPath  {
                         let sourceURL =
-                                PFileManager.shareInstance
+                            self.fileManager
                                     .appendFileNameWithPath(resPath, fileName: fileName)
                         do {
                             if FileManager.default.fileExists(atPath:destURL)  {
@@ -65,17 +66,17 @@ class PLocalImageManager : ImageManager {
     }
     
     func loadImageFromDocumentDirectoryPath(callBack:@escaping ([PImage])->()) {
-        DispatchQueue.global(qos: .background).async {
+        DispatchQueue.global(qos: .background).async {[unowned self] in
             if let documentPath =
-                        PFileManager.shareInstance.documentDirectoryPath()?.path {
-                let dirContents = PFileManager.shareInstance.directoryContentAtPath(documentPath)
+                        self.fileManager.documentDirectoryPath()?.path {
+                let dirContents = self.fileManager.directoryContentAtPath(documentPath)
                 let filteredFiles = dirContents.filter{
                     PLocalImageManager.fileExtensions.contains($0.pathExtension)
                 }
                 var localImages = [PImage]()
                 for fileName in filteredFiles {
                     let documentPath =
-                        PFileManager.shareInstance
+                        self.fileManager
                             .appendFileNameWithPath(documentPath, fileName: fileName)
                     let pImage = PImage(imagePath: documentPath)
                     localImages.append(pImage)
@@ -103,10 +104,10 @@ class PLocalImageManager : ImageManager {
     }
     
     func addImage(image:UIImage,callBack:@escaping (PImage)->()) {
-        DispatchQueue.global(qos: .background).async {
-            let documentsURL = PFileManager.shareInstance.documentDirectoryPath()
+        DispatchQueue.global(qos: .background).async { [unowned self] in
+            let documentsURL = self.fileManager.documentDirectoryPath()
             let documentPath =
-                PFileManager.shareInstance
+                self.fileManager
                     .appendFileNameWithPath(documentsURL, fileName: String.customImageName())?.path
             if let destURL = documentPath {
                 print("Dest: URL \(destURL)")
