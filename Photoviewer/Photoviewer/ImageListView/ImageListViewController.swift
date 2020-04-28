@@ -94,10 +94,21 @@ class ImageListViewController: UITableViewController, UIImagePickerControllerDel
            let filterAlertController = UIAlertController(title: NSLocalizedString("Filter", comment: ""), message: nil, preferredStyle: .actionSheet)
             filterAlertController.modalPresentationStyle = .popover
             filterAlertController.popoverPresentationController?.sourceView = sender
-            filterAlertController.addAction(UIAlertAction(title: NSLocalizedString("Favourite", comment: ""), style: .default, handler: { [unowned self](_) in
-                    self.coreDataImageManger.performFilter {
-                        self.tableView.reloadData()
-                }
+            filterAlertController.addAction(
+                UIAlertAction(
+                    title: NSLocalizedString("Favourite", comment: ""),
+                    style: .default, handler: { [unowned self](_) in
+                        self.coreDataImageManger.performFilter(isFavourite:true) {
+                            self.tableView.reloadData()
+                        }
+            }))
+            filterAlertController.addAction(
+                UIAlertAction(
+                    title: NSLocalizedString("Remove Filter", comment: ""),
+                    style: .default, handler: { [unowned self](_) in
+                        self.coreDataImageManger.performFilter(isFavourite:false) {
+                            self.tableView.reloadData()
+                        }
             }))
             filterAlertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
            self.present(filterAlertController, animated: true, completion: nil)

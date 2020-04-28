@@ -154,13 +154,15 @@ class PImageFetchController: PhImageFetcherProtocol {
         }
     }
         
-    func performFilter(callback: @escaping ()->()) {
+    func performFilter(isFavourite:Bool,callback: @escaping ()->()) {
         self.fetchRequest.predicate = nil
-        self.fetchRequest.predicate = NSPredicate(format: "isFavourite == %@",NSNumber(value: true))
+        if isFavourite {
+            self.fetchRequest.predicate =
+                NSPredicate(format: "isFavourite == %@",NSNumber(value: isFavourite))
+        }
+        NSFetchedResultsController<PhImage>.deleteCache(withName:"PhImageCache")
         self.preformFetch { (result) in
             callback()
         }
     }
-        
-    
 }

@@ -62,8 +62,8 @@
             filePath = "Photoviewer/ImageListView/ImageListViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "99"
-            endingLineNumber = "99"
+            startingLineNumber = "102"
+            endingLineNumber = "102"
             landmarkName = "filterList(_:)"
             landmarkType = "7">
          </BreakpointContent>
