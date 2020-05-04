@@ -28,6 +28,10 @@ class PImageFetchController: PhImageFetcherProtocol {
     private let userDefaults : UserDefaultsProtocol = PCoreDataUserDefaults.sharedInstance
     var fetchRequest: NSFetchRequest<PhImage>
     var fetchResultController:NSFetchedResultsController<PhImage>
+    let imageFetcherQueue = DispatchQueue(label: "CoreDataImageFetcher",
+                                          qos: .userInitiated,
+                                          attributes: .concurrent,
+                                          autoreleaseFrequency:.workItem, target:nil)
 
     init(managedObjectContext:NSManagedObjectContext,
          delegate:NSFetchedResultsControllerDelegate) {
@@ -70,7 +74,9 @@ class PImageFetchController: PhImageFetcherProtocol {
     }
 
     func addImage(image:UIImage) {
-        self.savePhImageObject(imagePath:String.customImageName(),image:image)
+        imageFetcherQueue.async(flags:.barrier) {
+            self.savePhImageObject(imagePath:String.customImageName(),image:image)
+        }
     }
     
     func objectAtIndexPath(_ indexPath:IndexPath) -> PhImage {
@@ -78,11 +84,13 @@ class PImageFetchController: PhImageFetcherProtocol {
     }
     
     func deleteObjectAtIndexPath(_ indexPath:IndexPath) {
-        self.managedObjectContext.delete(self.fetchResultController.object(at: indexPath))
-        do {
-            try managedObjectContext.save()
-        } catch let error as NSError {
-            print("Saving error: \(error), description: \(error.userInfo)")
+        imageFetcherQueue.async(flags:.barrier) { [unowned self] in
+            self.managedObjectContext.delete(self.fetchResultController.object(at: indexPath))
+            do {
+                try self.managedObjectContext.save()
+            } catch let error as NSError {
+                print("Saving error: \(error), description: \(error.userInfo)")
+            }
         }
     }
     
@@ -134,35 +142,40 @@ class PImageFetchController: PhImageFetcherProtocol {
     }
     
     func deleteAllImages(callback: @escaping ()->()) {
-        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "PhImage")
-        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
-        deleteRequest.resultType = NSBatchDeleteRequestResultType.resultTypeObjectIDs
-        do {
-            let result = try managedObjectContext
-                .persistentStoreCoordinator?.execute(deleteRequest, with: managedObjectContext)
-            let objectIDArray = (result as AnyObject).result as? [NSManagedObjectID]
-            let changes = [NSDeletedObjectsKey : objectIDArray]
-            NSManagedObjectContext
-                .mergeChanges(fromRemoteContextSave: changes as [AnyHashable : Any],
-                              into: [managedObjectContext])
-        } catch let error as NSError {
-            print("RefreshImage batch delete error:\(error)")
-        }
-        userDefaults.resetLoadedImageFromLocalBundleKey()
-        self.preformFetch { (result) in
-            callback()
+        imageFetcherQueue.async(flags:.barrier) { [unowned self] in
+            let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "PhImage")
+            let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+            deleteRequest.resultType = NSBatchDeleteRequestResultType.resultTypeObjectIDs
+            do {
+                let result = try self.managedObjectContext
+                    .persistentStoreCoordinator?.execute(deleteRequest,
+                                                         with: self.managedObjectContext)
+                let objectIDArray = (result as AnyObject).result as? [NSManagedObjectID]
+                let changes = [NSDeletedObjectsKey : objectIDArray]
+                NSManagedObjectContext
+                    .mergeChanges(fromRemoteContextSave: changes as [AnyHashable : Any],
+                                  into: [self.managedObjectContext])
+            } catch let error as NSError {
+                print("RefreshImage batch delete error:\(error)")
+            }
+            self.userDefaults.resetLoadedImageFromLocalBundleKey()
+            self.preformFetch { (result) in
+                callback()
+            }
         }
     }
         
     func performFilter(isFavourite:Bool,callback: @escaping ()->()) {
-        self.fetchRequest.predicate = nil
-        if isFavourite {
-            self.fetchRequest.predicate =
-                NSPredicate(format: "isFavourite == %@",NSNumber(value: isFavourite))
-        }
-        NSFetchedResultsController<PhImage>.deleteCache(withName:"PhImageCache")
-        self.preformFetch { (result) in
-            callback()
+        imageFetcherQueue.async(flags:.barrier) {
+            self.fetchRequest.predicate = nil
+            if isFavourite {
+                self.fetchRequest.predicate =
+                    NSPredicate(format: "isFavourite == %@",NSNumber(value: isFavourite))
+            }
+            NSFetchedResultsController<PhImage>.deleteCache(withName:"PhImageCache")
+            self.preformFetch { (result) in
+                callback()
+            }
         }
     }
 }

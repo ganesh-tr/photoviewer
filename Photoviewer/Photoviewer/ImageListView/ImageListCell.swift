@@ -31,7 +31,9 @@ class ImageListCell : UITableViewCell {
     func updateView() {
         imageNameLabel.text = self.phImage.imageName!
         favouriteButton.isSelected = self.phImage.isFavourite
-        phImageView.image = UIImage(data:phImage.image!)
+        if let imageObject = phImage.image {
+            phImageView.image = UIImage(data:imageObject)
+        }
         phImageView.layer.borderWidth = 3.0
         phImageView.layer.borderColor = UIColor.systemBlue.cgColor
         phImageView.layer.cornerRadius = phImageView.frame.size.width/2

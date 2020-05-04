@@ -50,15 +50,17 @@ class ImageListViewController: UITableViewController, UIImagePickerControllerDel
     
     func setUpNavBarItems() {
         navigationItem.leftBarButtonItem = editButtonItem
-        let addButton = UIBarButtonItem(barButtonSystemItem: .camera, target: self, action: #selector(insertNewObject(_:)))
+        let addButton = UIBarButtonItem(customView: createButtonWithIcon(nil, title:"Add", action:#selector(insertNewObject(_:))))
         let filterButton = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(filterList(_:)))
         navigationItem.rightBarButtonItems = [addButton,filterButton]
     }
     
-    func createButtonWithIcon(_ name:String, title:String,
+    func createButtonWithIcon(_ name:String?, title:String,
                               action:Selector) -> UIButton {
         let button =  UIButton(type: .system)
-        button.setImage(UIImage(named: name), for: .normal)
+        if name != nil {
+            button.setImage(UIImage(named: name!), for: .normal)
+        }
         button.addTarget(self, action:action, for: .touchUpInside)
         button.frame = CGRect(x: 0, y: 0, width: 53, height: 31)
         button.imageEdgeInsets = UIEdgeInsets(top: -1, left: 32, bottom: 1, right: -32)
@@ -99,7 +101,9 @@ class ImageListViewController: UITableViewController, UIImagePickerControllerDel
                     title: NSLocalizedString("Favourite", comment: ""),
                     style: .default, handler: { [unowned self](_) in
                         self.coreDataImageManger.performFilter(isFavourite:true) {
-                            self.tableView.reloadData()
+                            DispatchQueue.main.async {
+                                self.tableView.reloadData()
+                            }
                         }
             }))
             filterAlertController.addAction(
@@ -107,7 +111,9 @@ class ImageListViewController: UITableViewController, UIImagePickerControllerDel
                     title: NSLocalizedString("Remove Filter", comment: ""),
                     style: .default, handler: { [unowned self](_) in
                         self.coreDataImageManger.performFilter(isFavourite:false) {
-                            self.tableView.reloadData()
+                            DispatchQueue.main.async {
+                                self.tableView.reloadData()
+                            }
                         }
             }))
             filterAlertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
@@ -167,8 +173,9 @@ class ImageListViewController: UITableViewController, UIImagePickerControllerDel
     
     @objc func refreshTableViewData(_ sender: Any) {
         coreDataImageManger.deleteAllImages {
-            self.refreshTableViewControl.endRefreshing()
-            self.tableView.reloadData()
+            DispatchQueue.main.async {
+                self.refreshTableViewControl.endRefreshing()
+            }
         }
     }
 }
