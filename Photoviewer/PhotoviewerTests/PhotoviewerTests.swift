@@ -107,8 +107,9 @@ class PLocalImageManagerTest : XCTestCase {
                    Add image from local document directory path
                 """)
         PLocalImageManager.shareInstance.refreshImage { (images) in
+            let fileManager = PFileManager()
             let filePath =
-                PFileManager.shareInstance.appendFileNameWithPath(PFileManager.shareInstance.resourcePath()!, fileName: "1.jpeg")
+                fileManager.appendFileNameWithPath(fileManager.resourcePath()!, fileName: "a.jpeg")
             let image = UIImage(contentsOfFile: filePath)
             PLocalImageManager.shareInstance.addImage(image: image!) { (image) in
                 XCTAssertNotNil(image)
