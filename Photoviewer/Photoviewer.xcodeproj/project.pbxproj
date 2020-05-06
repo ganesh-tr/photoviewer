@@ -31,6 +31,7 @@
 		53CDD912244801110047280B /* PUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53CDD911244801110047280B /* PUserDefaults.swift */; };
 		53CDD914244807EE0047280B /* PExtensionString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53CDD913244807EE0047280B /* PExtensionString.swift */; };
 		53CDD916244815530047280B /* PrimarySplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53CDD915244815530047280B /* PrimarySplitViewController.swift */; };
+		53D06DD2246324FF008A1ED7 /* PString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D06DD1246324FF008A1ED7 /* PString.swift */; };
 		53F5356D244029BD00B94AF2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F5356C244029BD00B94AF2 /* AppDelegate.swift */; };
 		53F53570244029BD00B94AF2 /* Photoviewer.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 53F5356E244029BD00B94AF2 /* Photoviewer.xcdatamodeld */; };
 		53F53572244029BD00B94AF2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F53571244029BD00B94AF2 /* SceneDelegate.swift */; };
@@ -91,6 +92,7 @@
 		53CDD911244801110047280B /* PUserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PUserDefaults.swift; sourceTree = "<group>"; };
 		53CDD913244807EE0047280B /* PExtensionString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PExtensionString.swift; sourceTree = "<group>"; };
 		53CDD915244815530047280B /* PrimarySplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimarySplitViewController.swift; sourceTree = "<group>"; };
+		53D06DD1246324FF008A1ED7 /* PString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PString.swift; sourceTree = "<group>"; };
 		53F53569244029BD00B94AF2 /* Photoviewer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Photoviewer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		53F5356C244029BD00B94AF2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		53F5356F244029BD00B94AF2 /* Photoviewer.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Photoviewer.xcdatamodel; sourceTree = "<group>"; };
@@ -178,6 +180,7 @@
 				53CDD911244801110047280B /* PUserDefaults.swift */,
 				53CDD913244807EE0047280B /* PExtensionString.swift */,
 				53CDD90D24469CA80047280B /* PFileManager.swift */,
+				53D06DD1246324FF008A1ED7 /* PString.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -398,6 +401,7 @@
 				53CDD9102446C48C0047280B /* PImage.swift in Sources */,
 				53F53570244029BD00B94AF2 /* Photoviewer.xcdatamodeld in Sources */,
 				534098BA245061F1003A6CA2 /* CoreDataStack.swift in Sources */,
+				53D06DD2246324FF008A1ED7 /* PString.swift in Sources */,
 				53F53576244029BD00B94AF2 /* PreviewViewController.swift in Sources */,
 				5397025524454E8400048129 /* ImagePicker.swift in Sources */,
 				53F5356D244029BD00B94AF2 /* AppDelegate.swift in Sources */,

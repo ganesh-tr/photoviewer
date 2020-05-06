@@ -50,8 +50,14 @@ class ImageListViewController: UITableViewController, UIImagePickerControllerDel
     
     func setUpNavBarItems() {
         navigationItem.leftBarButtonItem = editButtonItem
-        let addButton = UIBarButtonItem(customView: createButtonWithIcon(nil, title:"Add", action:#selector(insertNewObject(_:))))
+        let addTitle = PString.a11yTitleTextForAddButton()
+        let filterTitle = PString.a11yTextForFilterButton()
+        let addButton = UIBarButtonItem(customView: createButtonWithIcon(nil, title:addTitle, action:#selector(insertNewObject(_:))))
+        addButton.accessibilityIdentifier = addTitle
+        addButton.accessibilityLabel = PString.a11yTextForAddButton()
         let filterButton = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(filterList(_:)))
+        filterButton.accessibilityIdentifier = filterTitle
+        filterButton.accessibilityLabel = filterTitle
         navigationItem.rightBarButtonItems = [addButton,filterButton]
     }
     
@@ -93,12 +99,12 @@ class ImageListViewController: UITableViewController, UIImagePickerControllerDel
     }
     
     @objc func filterList(_ sender: UIView) {
-           let filterAlertController = UIAlertController(title: NSLocalizedString("Filter", comment: ""), message: nil, preferredStyle: .actionSheet)
+        let filterAlertController = UIAlertController(title: PString.a11yTextForFilterButton(), message: nil, preferredStyle: .actionSheet)
             filterAlertController.modalPresentationStyle = .popover
             filterAlertController.popoverPresentationController?.sourceView = sender
             filterAlertController.addAction(
                 UIAlertAction(
-                    title: NSLocalizedString("Favourite", comment: ""),
+                    title: NSLocalizedString(PString.a11yTextForFavourite(), comment: ""),
                     style: .default, handler: { [unowned self](_) in
                         self.coreDataImageManger.performFilter(isFavourite:true) {
                             DispatchQueue.main.async {
@@ -108,7 +114,7 @@ class ImageListViewController: UITableViewController, UIImagePickerControllerDel
             }))
             filterAlertController.addAction(
                 UIAlertAction(
-                    title: NSLocalizedString("Remove Filter", comment: ""),
+                    title: PString.a11yTextForRemoveFilter(),
                     style: .default, handler: { [unowned self](_) in
                         self.coreDataImageManger.performFilter(isFavourite:false) {
                             DispatchQueue.main.async {
@@ -116,7 +122,9 @@ class ImageListViewController: UITableViewController, UIImagePickerControllerDel
                             }
                         }
             }))
-            filterAlertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            filterAlertController.addAction(
+                UIAlertAction(title: PString.a11yTextForCancelButton(),
+                              style: .cancel, handler: nil))
            self.present(filterAlertController, animated: true, completion: nil)
     }
 
