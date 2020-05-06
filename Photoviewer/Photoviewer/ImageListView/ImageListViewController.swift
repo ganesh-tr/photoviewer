@@ -55,7 +55,8 @@ class ImageListViewController: UITableViewController, UIImagePickerControllerDel
         let addButton = UIBarButtonItem(customView: createButtonWithIcon(nil, title:addTitle, action:#selector(insertNewObject(_:))))
         addButton.accessibilityIdentifier = addTitle
         addButton.accessibilityLabel = PString.a11yTextForAddButton()
-        let filterButton = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(filterList(_:)))
+//        let filterButton = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(filterList(_:)))
+        let filterButton = UIBarButtonItem(customView:createButtonWithIcon("", title:"Fltr", action: #selector(filterList(_:))))
         filterButton.accessibilityIdentifier = filterTitle
         filterButton.accessibilityLabel = filterTitle
         navigationItem.rightBarButtonItems = [addButton,filterButton]
