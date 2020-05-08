@@ -10,7 +10,6 @@ import Foundation
 import UIKit
 
 protocol PFileMangerProtocol {
-    
     func resourcePath() -> String?
     func documentDirectoryPath() -> URL?
     func directoryContentAtPath(_ path: String) -> [String]

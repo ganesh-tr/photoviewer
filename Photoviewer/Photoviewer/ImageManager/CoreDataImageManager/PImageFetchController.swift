@@ -10,9 +10,16 @@ import CoreData
 import Foundation
 import UIKit
 
+protocol CoreDataFetchRequestProtocol {
+    associatedtype CoreDataModelType : NSManagedObject = Self
+    var fetchRequest: NSFetchRequest<CoreDataModelType>{get set}
+}
+protocol CoreDataFetchResultProtocol {
+    associatedtype CoreDataModelType : NSManagedObject = Self
+    var fetchResultController:NSFetchedResultsController<CoreDataModelType> {get set}
+}
+
 protocol PhImageFetcherProtocol : class {
-    var fetchRequest: NSFetchRequest<PhImage>{get set}
-    var fetchResultController:NSFetchedResultsController<PhImage> {get set}
     func preformFetch(callback: @escaping (Bool)->())
     func numberOfSections() -> Int
     func numberOfRowsInSection(section:Int) -> Int
@@ -21,11 +28,15 @@ protocol PhImageFetcherProtocol : class {
     func addImage(image:UIImage)
 }
 
-class PImageFetchController: PhImageFetcherProtocol {
+class PImageFetchController: PhImageFetcherProtocol,
+                             CoreDataFetchRequestProtocol,
+                             CoreDataFetchResultProtocol {
+    typealias CoreDataModelType = PhImage
     private static let fileExtensions : [String] = ["jpeg","jpg","png"]
     private var managedObjectContext: NSManagedObjectContext
-    private let fileManager : PFileMangerProtocol  = PFileManager()
-    private let userDefaults : UserDefaultsProtocol = PCoreDataUserDefaults.sharedInstance
+    private let fileManager : PFileMangerProtocol
+    private let userDefaults : UserDefaultsProtocol
+    
     var fetchRequest: NSFetchRequest<PhImage>
     var fetchResultController:NSFetchedResultsController<PhImage>
     let imageFetcherQueue = DispatchQueue(label: "CoreDataImageFetcher",
@@ -34,7 +45,11 @@ class PImageFetchController: PhImageFetcherProtocol {
                                           autoreleaseFrequency:.workItem, target:nil)
 
     init(managedObjectContext:NSManagedObjectContext,
-         delegate:NSFetchedResultsControllerDelegate) {
+        delegate:NSFetchedResultsControllerDelegate,
+        fileManager:PFileMangerProtocol = PFileManager(),
+        userDefaults:UserDefaultsProtocol = PCoreDataUserDefaults.sharedInstance) {
+        self.fileManager = fileManager
+        self.userDefaults = userDefaults
         self.managedObjectContext = managedObjectContext
         self.fetchRequest = PhImage.fetchRequest()
         let imageNameSort = NSSortDescriptor(key: #keyPath(PhImage.imageName), ascending: true)

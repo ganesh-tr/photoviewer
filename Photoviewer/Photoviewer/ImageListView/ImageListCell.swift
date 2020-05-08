@@ -16,7 +16,7 @@ class ImageListCell : UITableViewCell {
     
     var phImage:PhImage!
     weak var coreDataStack:CoreDataStack!
-    
+
     func configureCellForImage(_ phImage:PhImage, coreDataStack:CoreDataStack) {
         self.phImage = phImage
         self.coreDataStack = coreDataStack
