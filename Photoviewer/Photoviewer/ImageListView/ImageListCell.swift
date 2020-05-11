@@ -30,8 +30,11 @@ class ImageListCell : UITableViewCell {
     }
 
     func updateView() {
-        imageNameLabel.text = self.phImage.imageName!
-        imageNameLabel.accessibilityLabel = imageNameLabel.text
+        if let imageName = self.phImage.imageName {
+            imageNameLabel.text = imageName
+            imageNameLabel.accessibilityLabel = imageName
+        }
+
         favouriteButton.isSelected = self.phImage.isFavourite
         if let imageObject = phImage.image {
             phImageView.image = UIImage(data:imageObject)

@@ -176,7 +176,7 @@ class ImageListViewController: UITableViewController, UIImagePickerControllerDel
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle,
                             forRowAt indexPath: IndexPath) {
             if editingStyle == .delete {
-                self.coreDataImageManger.deleteObjectAtIndexPath(indexPath)
+                self.coreDataImageManger.deleteObjectAtIndexPath(indexPath) {_ in }
             }
     }
     

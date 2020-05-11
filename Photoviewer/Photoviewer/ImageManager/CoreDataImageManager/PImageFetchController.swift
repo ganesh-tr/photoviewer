@@ -24,7 +24,7 @@ protocol PhImageFetcherProtocol : class {
     func numberOfSections() -> Int
     func numberOfRowsInSection(section:Int) -> Int
     func objectAtIndexPath(_ indexPath:IndexPath) -> PhImage
-    func deleteObjectAtIndexPath(_ indexPath:IndexPath)
+    func deleteObjectAtIndexPath(_ indexPath:IndexPath, callBack: @escaping (Bool) -> ())
     func addImage(image:UIImage)
 }
 
@@ -45,9 +45,10 @@ class PImageFetchController: PhImageFetcherProtocol,
                                           autoreleaseFrequency:.workItem, target:nil)
 
     init(managedObjectContext:NSManagedObjectContext,
-        delegate:NSFetchedResultsControllerDelegate,
+        delegate:NSFetchedResultsControllerDelegate?,
         fileManager:PFileMangerProtocol = PFileManager(),
-        userDefaults:UserDefaultsProtocol = PCoreDataUserDefaults.sharedInstance) {
+        userDefaults:UserDefaultsProtocol = PCoreDataUserDefaults.sharedInstance,
+        cacheName:String = "PhImageCache") {
         self.fileManager = fileManager
         self.userDefaults = userDefaults
         self.managedObjectContext = managedObjectContext
@@ -58,7 +59,7 @@ class PImageFetchController: PhImageFetcherProtocol,
            NSFetchedResultsController(fetchRequest: fetchRequest,
                                       managedObjectContext:self.managedObjectContext ,
                                       sectionNameKeyPath:nil,
-                                      cacheName:"PhImageCache")
+                                      cacheName:cacheName)
         self.fetchResultController.delegate = delegate
     }
     
@@ -75,7 +76,7 @@ class PImageFetchController: PhImageFetcherProtocol,
     }
 
     func preformFetch(callback: @escaping (Bool)->()) {
-        self.copyImagesFromLocalBundle {
+        self.copyImagesFromLocalBundle { (imagesCount) in
             var success = false
             do {
                 try self.fetchResultController.performFetch()
@@ -98,18 +99,20 @@ class PImageFetchController: PhImageFetcherProtocol,
         return self.fetchResultController.object(at: indexPath)
     }
     
-    func deleteObjectAtIndexPath(_ indexPath:IndexPath) {
+    func deleteObjectAtIndexPath(_ indexPath:IndexPath, callBack: @escaping (Bool) -> ()) {
         imageFetcherQueue.async(flags:.barrier) { [unowned self] in
             self.managedObjectContext.delete(self.fetchResultController.object(at: indexPath))
             do {
                 try self.managedObjectContext.save()
+                callBack(true)
             } catch let error as NSError {
+                callBack(false)
                 print("Saving error: \(error), description: \(error.userInfo)")
             }
         }
     }
     
-    func copyImagesFromLocalBundle(callBack: @escaping () -> ()) {
+    func copyImagesFromLocalBundle(callBack: @escaping (Int) -> ()) {
            print(userDefaults.isImageLoadedFromLocalBundle())
            if !userDefaults.isImageLoadedFromLocalBundle(),
                let resPath = fileManager.resourcePath() {
@@ -122,9 +125,11 @@ class PImageFetchController: PhImageFetcherProtocol,
                    self.savePhImageObject(imagePath:sourceURL)
               }
               userDefaults.loadedImageFromLocalBundle()
-           }
-           print(userDefaults.isImageLoadedFromLocalBundle())
-           callBack()
+             callBack(filteredFiles.count)
+           } else {
+            callBack(0)
+            print(userDefaults.isImageLoadedFromLocalBundle())
+        }
     }
     
     @discardableResult
@@ -143,7 +148,7 @@ class PImageFetchController: PhImageFetcherProtocol,
        }
        return phImage
     }
-       
+
     @discardableResult
     func savePhImageObject(imagePath:String, image:UIImage? = nil) -> PhImage? {
        do{

@@ -12,7 +12,6 @@
 		534098BA245061F1003A6CA2 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534098B9245061F1003A6CA2 /* CoreDataStack.swift */; };
 		534098BC2450635E003A6CA2 /* PImageFetchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534098BB2450635E003A6CA2 /* PImageFetchController.swift */; };
 		534098C224507A5D003A6CA2 /* PhImage+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534098C124507A5D003A6CA2 /* PhImage+CoreDataProperties.swift */; };
-		53542223244B380E00025B69 /* PImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53542222244B380E00025B69 /* PImageManager.swift */; };
 		53542225244B388A00025B69 /* PLocalImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53542224244B388A00025B69 /* PLocalImageManager.swift */; };
 		5364DA4B24407D6E00AB05DB /* i.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 5364DA4124407D6E00AB05DB /* i.jpeg */; };
 		5364DA4C24407D6E00AB05DB /* d.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 5364DA4224407D6E00AB05DB /* d.jpeg */; };
@@ -24,6 +23,7 @@
 		5364DA5224407D6E00AB05DB /* g.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 5364DA4824407D6E00AB05DB /* g.jpeg */; };
 		5364DA5324407D6E00AB05DB /* j.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 5364DA4924407D6E00AB05DB /* j.jpeg */; };
 		5364DA5424407D6E00AB05DB /* a.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 5364DA4A24407D6E00AB05DB /* a.jpeg */; };
+		537AA87D2466BF1E00A060EE /* PTestUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 537AA8792466BD9500A060EE /* PTestUserDefaults.swift */; };
 		5394A7CF244219AA008396DD /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5394A7C62442169F008396DD /* AppKit.framework */; platformFilter = maccatalyst; };
 		5397025524454E8400048129 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5397025424454E8400048129 /* ImagePicker.swift */; };
 		53CDD90E24469CA80047280B /* PFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53CDD90D24469CA80047280B /* PFileManager.swift */; };
@@ -72,7 +72,6 @@
 		534098B9245061F1003A6CA2 /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		534098BB2450635E003A6CA2 /* PImageFetchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PImageFetchController.swift; sourceTree = "<group>"; };
 		534098C124507A5D003A6CA2 /* PhImage+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhImage+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		53542222244B380E00025B69 /* PImageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PImageManager.swift; sourceTree = "<group>"; };
 		53542224244B388A00025B69 /* PLocalImageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLocalImageManager.swift; sourceTree = "<group>"; };
 		5364DA4124407D6E00AB05DB /* i.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = i.jpeg; sourceTree = "<group>"; };
 		5364DA4224407D6E00AB05DB /* d.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = d.jpeg; sourceTree = "<group>"; };
@@ -84,6 +83,7 @@
 		5364DA4824407D6E00AB05DB /* g.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = g.jpeg; sourceTree = "<group>"; };
 		5364DA4924407D6E00AB05DB /* j.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = j.jpeg; sourceTree = "<group>"; };
 		5364DA4A24407D6E00AB05DB /* a.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = a.jpeg; sourceTree = "<group>"; };
+		537AA8792466BD9500A060EE /* PTestUserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PTestUserDefaults.swift; sourceTree = "<group>"; };
 		5394A7BD24421589008396DD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5394A7C62442169F008396DD /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/AppKit.framework; sourceTree = DEVELOPER_DIR; };
 		5397025424454E8400048129 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
@@ -132,7 +132,6 @@
 			isa = PBXGroup;
 			children = (
 				53CDD90F2446C48C0047280B /* PImage.swift */,
-				53542222244B380E00025B69 /* PImageManager.swift */,
 				53542224244B388A00025B69 /* PLocalImageManager.swift */,
 			);
 			path = OtherImageManager;
@@ -257,6 +256,7 @@
 			children = (
 				53F53588244029BE00B94AF2 /* PhotoviewerTests.swift */,
 				53F5358A244029BE00B94AF2 /* Info.plist */,
+				537AA8792466BD9500A060EE /* PTestUserDefaults.swift */,
 			);
 			path = PhotoviewerTests;
 			sourceTree = "<group>";
@@ -390,9 +390,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				53542223244B380E00025B69 /* PImageManager.swift in Sources */,
 				530D99FD2455CFAA007FBE91 /* ImageListCell.swift in Sources */,
 				53CDD912244801110047280B /* PUserDefaults.swift in Sources */,
+				537AA87D2466BF1E00A060EE /* PTestUserDefaults.swift in Sources */,
 				53CDD916244815530047280B /* PrimarySplitViewController.swift in Sources */,
 				534098BC2450635E003A6CA2 /* PImageFetchController.swift in Sources */,
 				53F53574244029BD00B94AF2 /* ImageListViewController.swift in Sources */,

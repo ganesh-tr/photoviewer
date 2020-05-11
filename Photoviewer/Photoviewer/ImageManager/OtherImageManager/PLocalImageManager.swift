@@ -9,15 +9,24 @@
 import Foundation
 import UIKit
 
+protocol ImageManager {
+    func loadImages(callBack:@escaping ([PImage])->())
+    func deleteImage(image:PImage, callBack:@escaping ()->())
+    func refreshImage(callBack:@escaping ([PImage])->())
+    func addImage(image:UIImage,callBack:@escaping (PImage)->())
+}
 
 class PLocalImageManager : ImageManager {
     private static let fileExtensions : [String] = ["jpeg","jpg","png"]
-    private let userDefaults : UserDefaultsProtocol = PDocumentDirectoryUserDefaults.sharedInstance
-    static let shareInstance = PLocalImageManager()
-    let fileManager : PFileMangerProtocol = PFileManager()
+    private let userDefaults : UserDefaultsProtocol
+    let fileManager : PFileMangerProtocol
     typealias ImageType = PImage
     
-    private init() {}
+    init(fileManager : PFileMangerProtocol = PFileManager(),
+         userDefaults : UserDefaultsProtocol = PDocumentDirectoryUserDefaults.sharedInstance) {
+        self.fileManager = fileManager
+        self.userDefaults = userDefaults
+    }
     
     func copyImagesFromLocalBundle(callBack:@escaping ()->()) {
         DispatchQueue.global(qos: .background).async { [unowned self] in
@@ -98,7 +107,7 @@ class PLocalImageManager : ImageManager {
     
     func refreshImage(callBack: @escaping ([PImage])->()) {
         self.userDefaults.resetLoadedImageFromLocalBundleKey()
-        self.loadImageFromDocumentDirectoryPath { (images) in
+        self.loadImages { (images) in
             callBack(images)
         }
     }

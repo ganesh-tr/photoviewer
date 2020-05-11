@@ -45,3 +45,27 @@ class PFileManager : PFileMangerProtocol {
     }
 }
 
+class PTestFileManager : PFileMangerProtocol {
+    init() {}
+    
+    func documentDirectoryPath() -> URL? {
+           return FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
+    }
+       
+    func directoryContentAtPath(_ path: String) -> [String] {
+        return ["g.jpeg","h.jpeg"]
+    }
+       
+    func resourcePath() -> String? {
+       return Bundle.main.resourcePath
+    }
+
+    func appendFileNameWithPath(_ path:String,fileName:String) -> String {
+       return #"\#(path)/\#(fileName)"#
+    }
+
+    func appendFileNameWithPath(_ path:URL?,fileName:String) -> URL? {
+        return path?.appendingPathComponent(fileName)
+    }
+}
+

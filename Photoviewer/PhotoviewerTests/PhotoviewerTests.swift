@@ -45,7 +45,18 @@ class PExtensionStringTests: XCTestCase {
 }
 
 class PLocalImageManagerTest : XCTestCase {
+    var localManager : PLocalImageManager!
     
+    override func setUp() {
+        super.setUp()
+        localManager = PLocalImageManager(fileManager: PTestFileManager(),
+                                          userDefaults: PDocumentDirectoryTestUserDefaults.sharedInstance)
+    }
+    
+    override func tearDown() {
+        super.tearDown()
+        localManager = nil
+    }
     func testFreshLoadImagesFromDocumentDirectoryPath() {
         let expectations =
             expectation(description:
@@ -53,11 +64,11 @@ class PLocalImageManagerTest : XCTestCase {
                    Fresh Image load into document directory
                    from local bundle and runs the callback closure
                 """)
-        PLocalImageManager.shareInstance.loadImages { (images) in
+        localManager.loadImages { (images) in
             XCTAssert(images.count > 0)
             expectations.fulfill()
         }
-        waitForExpectations(timeout: 1) { error in
+        waitForExpectations(timeout: 5) { error in
           if let error = error {
             XCTFail("waitForExpectationsWithTimeout errored: \(error)")
           }
@@ -71,11 +82,11 @@ class PLocalImageManagerTest : XCTestCase {
                    Load images from document directory
                    from local bundle and runs the callback closure
                 """)
-        PLocalImageManager.shareInstance.loadImages { (images) in
+        localManager.loadImages { (images) in
             XCTAssert(images.count > 0)
             expectations.fulfill()
         }
-        waitForExpectations(timeout: 1) { error in
+        waitForExpectations(timeout: 5) { error in
           if let error = error {
             XCTFail("waitForExpectationsWithTimeout errored: \(error)")
           }
@@ -89,11 +100,11 @@ class PLocalImageManagerTest : XCTestCase {
                    Refresh Image load in document directory
                    from local bundle and runs the callback closure
                 """)
-        PLocalImageManager.shareInstance.refreshImage(callBack: { (images) in
+        localManager.refreshImage(callBack: { (images) in
             XCTAssert(images.count > 0)
             expectations.fulfill()
         })
-        waitForExpectations(timeout: 1) { error in
+        waitForExpectations(timeout: 5) { error in
           if let error = error {
             XCTFail("waitForExpectationsWithTimeout errored: \(error)")
           }
@@ -106,17 +117,17 @@ class PLocalImageManagerTest : XCTestCase {
                 """
                    Add image from local document directory path
                 """)
-        PLocalImageManager.shareInstance.refreshImage { (images) in
+        localManager.refreshImage { [unowned self](images) in
             let fileManager = PFileManager()
             let filePath =
                 fileManager.appendFileNameWithPath(fileManager.resourcePath()!, fileName: "a.jpeg")
             let image = UIImage(contentsOfFile: filePath)
-            PLocalImageManager.shareInstance.addImage(image: image!) { (image) in
+            self.localManager.addImage(image: image!) { (image) in
                 XCTAssertNotNil(image)
                 expectations.fulfill()
             }
         }
-        waitForExpectations(timeout: 1) { error in
+        waitForExpectations(timeout: 5) { error in
           if let error = error {
             XCTFail("waitForExpectationsWithTimeout errored: \(error)")
           }
@@ -130,9 +141,9 @@ class PLocalImageManagerTest : XCTestCase {
                 """
                    Delete image from local document directory path
                 """)
-        PLocalImageManager.shareInstance.refreshImage { (images) in
+        localManager.refreshImage { [unowned self](images) in
             if images.count > 0 {
-                PLocalImageManager.shareInstance.deleteImage(image: images[0]) {
+                self.localManager.deleteImage(image: images[0]) {
                     XCTAssert(true)
                     expectations.fulfill()
                 }
@@ -141,10 +152,126 @@ class PLocalImageManagerTest : XCTestCase {
                 expectations.fulfill()
             }
         }
-        waitForExpectations(timeout: 1) { error in
+        waitForExpectations(timeout: 5) { error in
           if let error = error {
             XCTFail("waitForExpectationsWithTimeout errored: \(error)")
           }
         }
     }
+}
+
+class PImageFetchControllerTest : XCTestCase {
+    var imageFetchController : PImageFetchController!
+    var coreDataStack :CoreDataStack!
+    
+    override func setUp() {
+        super.setUp()
+        coreDataStack = CoreDataStack(modelName: "Photoviewer")
+        imageFetchController = PImageFetchController(managedObjectContext:self.coreDataStack.managedContext,
+                                                     delegate:nil,
+                                                     fileManager:PTestFileManager(),
+                                                     userDefaults:PTestCoreDataUserDefaults.sharedInstance,
+                                                     cacheName:"PhTestImageCache")
+    }
+    
+    override func tearDown() {
+        super.tearDown()
+        imageFetchController = nil
+        coreDataStack = nil
+    }
+
+    func testDeleteAllImages() {
+        let expectations =
+            expectation(description:
+                """
+                   Delete all image from CoreData
+                """)
+        imageFetchController.deleteAllImages {
+            expectations.fulfill()
+        }
+        wait(for: [expectations], timeout: 5)
+        XCTAssert(true)
+    }
+
+    func testCopyImageFromLocalBundleToCoreData() {
+        let expectations =
+            expectation(description:
+                """
+                   Copy image from local bundle to CoreData
+                """)
+        var imageCount = 0
+        PTestCoreDataUserDefaults.sharedInstance.resetLoadedImageFromLocalBundleKey()
+        imageFetchController.copyImagesFromLocalBundle { (count) in
+                imageCount = count
+                expectations.fulfill()
+        }
+        wait(for: [expectations], timeout: 5)
+        XCTAssertEqual(imageCount,2)
+    }
+    
+    func testLoadImagesFromCoreData() {
+        let expectations =
+            expectation(description:
+                """
+                   Load images from CoreData
+                """)
+        var rowCount = 0
+        imageFetchController.preformFetch { [unowned self](success) in
+            rowCount = self.imageFetchController.numberOfRowsInSection(section: 0)
+            expectations.fulfill()
+        }
+        wait(for: [expectations], timeout: 5)
+        XCTAssertEqual(rowCount,2)
+    }
+    
+    func testPerformFilterWithFavourite()  {
+        let expectations =
+            expectation(description:
+                """
+                   Perform filter images from CoreData
+                """)
+        var rowCount = 0
+        imageFetchController.performFilter(isFavourite: true) { [unowned self] in
+            self.imageFetchController.preformFetch { [unowned self](success) in
+                rowCount = self.imageFetchController.numberOfRowsInSection(section: 0)
+                expectations.fulfill()
+            }
+        }
+        wait(for: [expectations], timeout: 5)
+        XCTAssertEqual(rowCount,0)
+    }
+    
+    func testPerformFilterWithOutFavourite()  {
+        let expectations =
+            expectation(description:
+                """
+                   Perform filter images from CoreData
+                """)
+        var rowCount = 0
+        imageFetchController.performFilter(isFavourite: false) { [unowned self] in
+            self.imageFetchController.preformFetch { [unowned self](success) in
+                rowCount = self.imageFetchController.numberOfRowsInSection(section: 0)
+                expectations.fulfill()
+            }
+        }
+        wait(for: [expectations], timeout: 5)
+        XCTAssertEqual(rowCount,2)
+    }
+    
+//    func testDeleteImageFromList() {
+//        let expectations =
+//            expectation(description:
+//                """
+//                   Perform filter images from CoreData
+//                """)
+//        var rowCount = 0
+//            self.imageFetchController.preformFetch { [unowned self](success) in
+//                rowCount = self.imageFetchController.numberOfRowsInSection(section: 0)
+//                expectations.fulfill()
+//                self.imageFetchController.deleteObjectAtIndexPath(IndexPath.init(row: 0, section: 0)) { (result) in
+//                }
+//            }
+//        wait(for: [expectations], timeout: 5)
+//        XCTAssertEqual(rowCount,1)
+//    }
 }
