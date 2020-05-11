@@ -49,6 +49,16 @@
                ReferencedContainer = "container:Photoviewer.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "535C272E24690A7200813085"
+               BuildableName = "PhotoviewerUITests.xctest"
+               BlueprintName = "PhotoviewerUITests"
+               ReferencedContainer = "container:Photoviewer.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

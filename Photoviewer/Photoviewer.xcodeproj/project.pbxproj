@@ -13,6 +13,7 @@
 		534098BC2450635E003A6CA2 /* PImageFetchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534098BB2450635E003A6CA2 /* PImageFetchController.swift */; };
 		534098C224507A5D003A6CA2 /* PhImage+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534098C124507A5D003A6CA2 /* PhImage+CoreDataProperties.swift */; };
 		53542225244B388A00025B69 /* PLocalImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53542224244B388A00025B69 /* PLocalImageManager.swift */; };
+		535C273224690A7200813085 /* PhotoviewerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 535C273124690A7200813085 /* PhotoviewerUITests.swift */; };
 		5364DA4B24407D6E00AB05DB /* i.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 5364DA4124407D6E00AB05DB /* i.jpeg */; };
 		5364DA4C24407D6E00AB05DB /* d.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 5364DA4224407D6E00AB05DB /* d.jpeg */; };
 		5364DA4D24407D6E00AB05DB /* c.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 5364DA4324407D6E00AB05DB /* c.jpeg */; };
@@ -44,6 +45,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		535C273424690A7200813085 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 53F53561244029BD00B94AF2 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 53F53568244029BD00B94AF2;
+			remoteInfo = Photoviewer;
+		};
 		53F53585244029BE00B94AF2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 53F53561244029BD00B94AF2 /* Project object */;
@@ -73,6 +81,9 @@
 		534098BB2450635E003A6CA2 /* PImageFetchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PImageFetchController.swift; sourceTree = "<group>"; };
 		534098C124507A5D003A6CA2 /* PhImage+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhImage+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		53542224244B388A00025B69 /* PLocalImageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLocalImageManager.swift; sourceTree = "<group>"; };
+		535C272F24690A7200813085 /* PhotoviewerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PhotoviewerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		535C273124690A7200813085 /* PhotoviewerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoviewerUITests.swift; sourceTree = "<group>"; };
+		535C273324690A7200813085 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5364DA4124407D6E00AB05DB /* i.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = i.jpeg; sourceTree = "<group>"; };
 		5364DA4224407D6E00AB05DB /* d.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = d.jpeg; sourceTree = "<group>"; };
 		5364DA4324407D6E00AB05DB /* c.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = c.jpeg; sourceTree = "<group>"; };
@@ -110,6 +121,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		535C272C24690A7200813085 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		53F53566244029BD00B94AF2 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -184,6 +202,15 @@
 			path = Utils;
 			sourceTree = "<group>";
 		};
+		535C273024690A7200813085 /* PhotoviewerUITests */ = {
+			isa = PBXGroup;
+			children = (
+				535C273124690A7200813085 /* PhotoviewerUITests.swift */,
+				535C273324690A7200813085 /* Info.plist */,
+			);
+			path = PhotoviewerUITests;
+			sourceTree = "<group>";
+		};
 		5394A7BC24421589008396DD /* AppKitGlue */ = {
 			isa = PBXGroup;
 			children = (
@@ -214,6 +241,7 @@
 				53F5356B244029BD00B94AF2 /* Photoviewer */,
 				53F53587244029BE00B94AF2 /* PhotoviewerTests */,
 				5394A7BC24421589008396DD /* AppKitGlue */,
+				535C273024690A7200813085 /* PhotoviewerUITests */,
 				53F5356A244029BD00B94AF2 /* Products */,
 				5394A7C1244215A4008396DD /* Frameworks */,
 			);
@@ -224,6 +252,7 @@
 			children = (
 				53F53569244029BD00B94AF2 /* Photoviewer.app */,
 				53F53584244029BE00B94AF2 /* PhotoviewerTests.xctest */,
+				535C272F24690A7200813085 /* PhotoviewerUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -281,6 +310,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		535C272E24690A7200813085 /* PhotoviewerUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 535C273824690A7200813085 /* Build configuration list for PBXNativeTarget "PhotoviewerUITests" */;
+			buildPhases = (
+				535C272B24690A7200813085 /* Sources */,
+				535C272C24690A7200813085 /* Frameworks */,
+				535C272D24690A7200813085 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				535C273524690A7200813085 /* PBXTargetDependency */,
+			);
+			name = PhotoviewerUITests;
+			productName = PhotoviewerUITests;
+			productReference = 535C272F24690A7200813085 /* PhotoviewerUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		53F53568244029BD00B94AF2 /* Photoviewer */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 53F5358D244029BE00B94AF2 /* Build configuration list for PBXNativeTarget "Photoviewer" */;
@@ -323,10 +370,14 @@
 		53F53561244029BD00B94AF2 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1120;
+				LastSwiftUpdateCheck = 1140;
 				LastUpgradeCheck = 1120;
 				ORGANIZATIONNAME = "Ganesh TR";
 				TargetAttributes = {
+					535C272E24690A7200813085 = {
+						CreatedOnToolsVersion = 11.4.1;
+						TestTargetID = 53F53568244029BD00B94AF2;
+					};
 					53F53568244029BD00B94AF2 = {
 						CreatedOnToolsVersion = 11.2.1;
 					};
@@ -351,11 +402,19 @@
 			targets = (
 				53F53568244029BD00B94AF2 /* Photoviewer */,
 				53F53583244029BE00B94AF2 /* PhotoviewerTests */,
+				535C272E24690A7200813085 /* PhotoviewerUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		535C272D24690A7200813085 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		53F53567244029BD00B94AF2 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -386,6 +445,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		535C272B24690A7200813085 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				535C273224690A7200813085 /* PhotoviewerUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		53F53565244029BD00B94AF2 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -423,6 +490,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		535C273524690A7200813085 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 53F53568244029BD00B94AF2 /* Photoviewer */;
+			targetProxy = 535C273424690A7200813085 /* PBXContainerItemProxy */;
+		};
 		53F53586244029BE00B94AF2 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 53F53568244029BD00B94AF2 /* Photoviewer */;
@@ -450,6 +522,44 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		535C273624690A7200813085 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = PhotoviewerUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.ganesh.PhotoviewerUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Photoviewer;
+			};
+			name = Debug;
+		};
+		535C273724690A7200813085 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = PhotoviewerUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.ganesh.PhotoviewerUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Photoviewer;
+			};
+			name = Release;
+		};
 		53F5358B244029BE00B94AF2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -651,6 +761,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		535C273824690A7200813085 /* Build configuration list for PBXNativeTarget "PhotoviewerUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				535C273624690A7200813085 /* Debug */,
+				535C273724690A7200813085 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		53F53564244029BD00B94AF2 /* Build configuration list for PBXProject "Photoviewer" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

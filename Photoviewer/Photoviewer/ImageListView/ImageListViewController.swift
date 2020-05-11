@@ -30,6 +30,8 @@ class ImageListViewController: UITableViewController, UIImagePickerControllerDel
                 (controllers[controllers.count-1] as! UINavigationController).topViewController
                     as? PreviewViewController
         }
+        self.tableView.rowHeight = UITableView.automaticDimension
+        self.tableView.estimatedRowHeight = 60
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -55,10 +57,10 @@ class ImageListViewController: UITableViewController, UIImagePickerControllerDel
         let addButton = UIBarButtonItem(customView: createButtonWithIcon(nil, title:addTitle, action:#selector(insertNewObject(_:))))
         addButton.accessibilityIdentifier = addTitle
         addButton.accessibilityLabel = PString.a11yTextForAddButton()
-//        let filterButton = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(filterList(_:)))
         let filterButton = UIBarButtonItem(customView:createButtonWithIcon("", title:"Fltr", action: #selector(filterList(_:))))
         filterButton.accessibilityIdentifier = filterTitle
         filterButton.accessibilityLabel = filterTitle
+        
         navigationItem.rightBarButtonItems = [addButton,filterButton]
     }
     
@@ -166,7 +168,7 @@ class ImageListViewController: UITableViewController, UIImagePickerControllerDel
     
     override func tableView(_ tableView: UITableView,
                    heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 60.0
+        return UITableView.automaticDimension
     }
     
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {

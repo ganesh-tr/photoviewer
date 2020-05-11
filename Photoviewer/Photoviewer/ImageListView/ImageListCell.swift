@@ -20,7 +20,6 @@ class ImageListCell : UITableViewCell {
     func configureCellForImage(_ phImage:PhImage, coreDataStack:CoreDataStack) {
         self.phImage = phImage
         self.coreDataStack = coreDataStack
-        favouriteButton.accessibilityIdentifier = PString.a11yTextForFavourite()
         updateView()
     }
     
@@ -35,15 +34,20 @@ class ImageListCell : UITableViewCell {
             imageNameLabel.accessibilityLabel = imageName
         }
 
-        favouriteButton.isSelected = self.phImage.isFavourite
         if let imageObject = phImage.image {
-            phImageView.image = UIImage(data:imageObject)
+            let image = UIImage(data:imageObject)
+            phImageView.image = image
+            phImageView.isAccessibilityElement = true
+//            phImageView.accessibilityTraits = .image
+            phImageView.accessibilityLabel =
+            "Size: \(Int(image!.size.width)) into \(Int(image!.size.height))"
         }
         phImageView.layer.borderWidth = 3.0
         phImageView.layer.borderColor = UIColor.systemBlue.cgColor
         phImageView.layer.cornerRadius = phImageView.frame.size.width/2
-        favouriteButton.accessibilityValue =
-            PString.a11yTextForFavouriteSelection(selection:self.phImage.isFavourite)
+        favouriteButton.isSelected = self.phImage.isFavourite
+        favouriteButton.accessibilityIdentifier = PString.a11yTextForFavourite()
+        favouriteButton.accessibilityLabel = PString.a11yTextForFavourite()
     }
     
     @IBAction func onTapFavouriteButton(_ sender: Any) {

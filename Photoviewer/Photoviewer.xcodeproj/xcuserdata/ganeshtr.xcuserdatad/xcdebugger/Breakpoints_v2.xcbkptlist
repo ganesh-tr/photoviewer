@@ -39,32 +39,64 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "254C2896-570C-4FB2-8B13-51027CFC291B"
-            shouldBeEnabled = "Yes"
+            uuid = "F1CA0AC7-5C14-4B04-8B61-59E365F9CFE4"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Photoviewer/Utils/PUserDefaults.swift"
+            filePath = "Photoviewer/ImageManager/CoreDataImageManager/PImageFetchController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "52"
-            endingLineNumber = "52"
-            landmarkName = "resetLoadedImageFromLocalBundleKey()"
+            startingLineNumber = "143"
+            endingLineNumber = "143"
+            landmarkName = "createImageObjectFromPath(imagePath:image:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "4D4A50C4-26E7-488F-B86B-E435A5A736F6"
-            shouldBeEnabled = "Yes"
+            uuid = "A44E342B-8927-4CC0-B52F-A3345FEFEFBC"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Photoviewer/ImageListView/ImageListViewController.swift"
+            filePath = "Photoviewer/ImageManager/CoreDataImageManager/PImageFetchController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "102"
-            endingLineNumber = "102"
-            landmarkName = "filterList(_:)"
+            startingLineNumber = "146"
+            endingLineNumber = "146"
+            landmarkName = "createImageObjectFromPath(imagePath:image:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "50058256-C7E8-47B5-BCAB-B40EA6B9CE5A"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Photoviewer/ImageManager/CoreDataImageManager/PImageFetchController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "142"
+            endingLineNumber = "142"
+            landmarkName = "createImageObjectFromPath(imagePath:image:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "43482631-E8F7-4156-8AB9-7868D1F5C907"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Photoviewer/ImageManager/CoreDataImageManager/PImageFetchController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "147"
+            endingLineNumber = "147"
+            landmarkName = "createImageObjectFromPath(imagePath:image:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
