@@ -139,6 +139,7 @@ class ImageListViewController: UITableViewController, UIImagePickerControllerDel
                 let object = self.coreDataImageManger.objectAtIndexPath(indexPath)
                 let controller = (segue.destination as! UINavigationController).topViewController as! PreviewViewController
                 controller.imageItem = object
+                controller.coredataStack = coreDataStack
                 controller.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
                 controller.navigationItem.leftItemsSupplementBackButton = true
                 detailViewController = controller

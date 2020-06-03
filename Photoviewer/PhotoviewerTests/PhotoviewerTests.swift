@@ -275,3 +275,57 @@ class PImageFetchControllerTest : XCTestCase {
 //        XCTAssertEqual(rowCount,1)
 //    }
 }
+
+class SetUpAndTearDownExampleTestCase: XCTestCase {
+    var nameTest: String!
+    
+    override class func setUp() { // 1.
+        super.setUp()
+        // This is the setUp() class method.
+        // It is called before the first test method begins.
+        // Set up any overall initial state here.
+    }
+    
+    override func setUp() { // 2.
+        super.setUp()
+        self.nameTest = "instance setup"
+        // This is the setUp() instance method.
+        // It is called before each test method begins.
+        // Set up any per-test state here.
+    }
+    
+    func testMethod1() { // 3.
+        
+        // This is the first test method.
+        // Your testing code goes here.
+        addTeardownBlock { // 4.
+            // Called when testMethod1() ends.
+        }
+    }
+    
+    func testMethod2() { // 5.
+        // This is the second test method.
+        // Your testing code goes here.
+        addTeardownBlock { // 6.
+            // Called when testMethod2() ends.
+        }
+        addTeardownBlock { // 7.
+            // Called when testMethod2() ends.
+        }
+    }
+    
+    override func tearDown() { // 8.
+        // This is the tearDown() instance method.
+        // It is called after each test method completes.
+        // Perform any per-test cleanup here.
+        super.tearDown()
+    }
+    
+    override class func tearDown() { // 9.
+        // This is the tearDown() class method.
+        // It is called after all test methods complete.
+        // Perform any overall cleanup here.
+        super.tearDown()
+    }
+    
+}

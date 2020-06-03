@@ -7,12 +7,21 @@
 //
 
 import UIKit
+import CoreData
 
 class PreviewViewController: UIViewController {
 
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var pathLabel: UILabel!
     @IBOutlet weak var imageSizeLabel: UILabel!
+    
+    var coredataStack:CoreDataStack!
+    
+    var imageItem: PhImage? {
+        didSet {
+            configureView()
+        }
+    }
     
     func configureView() {
         if let imageV = imageView {
@@ -43,16 +52,29 @@ class PreviewViewController: UIViewController {
         configureView()
     }
 
-    var imageItem: PhImage? {
-        didSet {
-            configureView()
-        }
-    }
-
     @IBAction func onTapRotateButton(_ sender: Any) {
-        let angle =  Double.pi/2
-         let tr = CGAffineTransform.identity.rotated(by: CGFloat(angle))
-         imageView.transform = tr
+        if let image = imageItem?.image {
+            let rotatedImage = UIImage.init(data:image)?.rotate(radians: .pi/2)
+            imageItem?.image = rotatedImage?.jpegData(compressionQuality: 1.0)
+            self.imageView.image = rotatedImage
+            coredataStack.saveContext()
+        }
     }
 }
 
+extension UIImage {
+    func rotate(radians: Float) -> UIImage? {
+        var newSize = CGRect(origin: CGPoint.zero, size: self.size).applying(CGAffineTransform(rotationAngle: CGFloat(radians))).size
+        newSize.width = floor(newSize.width)
+        newSize.height = floor(newSize.height)
+        UIGraphicsBeginImageContextWithOptions(newSize, false, self.scale)
+        let context = UIGraphicsGetCurrentContext()!
+        context.translateBy(x: newSize.width/2, y: newSize.height/2)
+        context.rotate(by: CGFloat(radians))
+        self.draw(in: CGRect(x: -self.size.width/2, y: -self.size.height/2, width: self.size.width, height: self.size.height))
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+
+        return newImage
+    }
+}
