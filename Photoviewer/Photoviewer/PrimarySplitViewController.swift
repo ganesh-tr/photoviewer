@@ -14,7 +14,7 @@ UISplitViewControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.delegate = self
-        self.preferredDisplayMode = .primaryOverlay
+        self.preferredDisplayMode = .allVisible
         // Do any additional setup after loading the view.
     }
     
