@@ -10,10 +10,13 @@ jobs:
   build:
 
     runs-on: macos-latest
-
+      
     steps:
+    - with:
+        xcode-version: '12.0'
     - uses: actions/checkout@v2
     - name: Build
       run: swift build -v
     - name: Run tests
       run: swift test -v
+      
